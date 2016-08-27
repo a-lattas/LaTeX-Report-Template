@@ -1,41 +1,43 @@
 
-\documentclass[12pt, a4paper]{article}
+\documentclass[12pt, a4paper]{article} % set document type and sizes
 
 %---------------------------------------------------------------------------------------------------------------------
 % Packages
 %---------------------------------------------------------------------------------------------------------------------
 
-% For Greek characters support compile with XeLaTeX
-\usepackage{xltxtra} % Greek support
-\usepackage{xgreek} % Greek support
-\setmainfont[Mapping=tex-text]{Garamond} % Font choice
+% Useful Packages.
 
-\usepackage{amsmath} % math support
-\usepackage{enumitem} % list support
-\usepackage{multirow} % for table
-\usepackage{float} % for table
-% to import tables from excel, csv use http://www.tablesgenerator.com/latex_tables
+\usepackage{amsmath} % prints mathematical formulas
+\usepackage{enumitem} % handles lists
+
+\usepackage{multirow} % handles merging cells in tables
+\usepackage{float} % adds [H] option to \begin{table}[H] to restrict floating.
+% to import tables from excel and csv use http://www.tablesgenerator.com/latex_tables
 
 \usepackage{cite} % Bibliography support 
+
+% For Greek characters support compile with XeLaTeX and include
+%\usepackage{xltxtra} % Greek support
+%\usepackage{xgreek} % Greek support
+%\setmainfont[Mapping=tex-text]{Garamond} % Font choice
 
 %---------------------------------------------------------------------------------------------------------------------
 % Title Section
 %---------------------------------------------------------------------------------------------------------------------
 
-\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % command for creating lines to place the title in a box
 
 \title{	
 \normalfont \normalsize 
-\textsc{Οικονομικό Πανεπιστήμιο Αθηνών, τμήμα Διοικητικής Επιστήμης και Τεχνολογίας} \\ [25pt] % Your university, school and/or department name(s)
-\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
-\huge Υποχρεωτική Εργασία ΜΕ.ΔΕ.ΒΕ \\ % The assignment title
-\textsc{Εξεταστική Σεπτεμβρίου 2016} \\ 
-\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+\textsc{Athens University of Economics and Business, Department of Management Science and Technology} \\ [25pt] % University name and department
+\horrule{0.5pt} \\[0.4cm] % Top line
+\huge A \LaTeX Report and Assignment Template \\ % The report title
+\horrule{2pt} \\[0.5cm] % Bottom line
 }
 
-\author{Αλέξανδρος Λάττας \\ 8130086} % Your name
+\author{Alex Lattas\\info [at] lattas.eu} % Author's name
 
-\date{\normalsize\today} % Today's date or a custom date
+\date{\normalsize\today} % Today's date
 
 %---------------------------------------------------------------------------------------------------------------------
 % Main Document
@@ -43,634 +45,87 @@
 
 \begin{document}
 
-\maketitle %Εκτύπωση Τίτλου
+\maketitle % print title
 
 %---------------------------------------------------------------------------------------------------------------------
-% Εισαγωγή
+% Introduction
 %---------------------------------------------------------------------------------------------------------------------
 
-\section{Εισαγωγή}
+\section{Introduction}
 
-Η παρούσα εργαία αφορά στην επίλυση ενός προβλήματος που αναφέρεται στην διεθνή βιβλιογραφία ως Orienteering Problem (OP). Σκοπός της εργασίας είναι να χρησιμοποιηθούν τρεις αλγόριθμοι: ο Πλεονεκτικός Κατασκευαστικός Αλγόριθμος, ο Αλγόριθμος Επαναληπτικής Βελτίωσης και ο Αλγόριθμος Simulated Annealing. Τα δεδομένα του προβλήματος θα οριστούν με τέτοιο τρόπο, ούτως ώστε να αναδειχθούν όλες οι υπολογιστικές πτυχές των προαναφερθέντων αλγορίθμων και μπορούν να διαφέρουν για κάθε αλγόριθμο.
+Lorem ipsum dolor sit amet, \textit{consectetur} %italics
+ adipiscing elit, sed do eiusmod \underline{tempor} %underline
+ incididunt ut labore et dolore magna \textbf{aliqua}. %bold
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-\subsection{Το Orienteering Problem}
-Το \textit{Orienteering Problem} αφορά τον σχεδιασμό μίας κλειστής διαδρομής με ορισμένη αρχή και τέλος, με σκοπό να μεγιστοποιηθεί το συνολικό συλλεγόμενο score από την επίσκεψη επιλεγμένων κόμβων, υπό τον περιορισμό ενός χρονικού περιορισμού \cite{feillet2005traveling}. Κάθε κόμβος \(i \in N\) χαρακτηρίζεται από ένα score \( Si \), o χρόνος μετάβασης από κόμβο \(i\) σε κόμβο \(j\) είναι ο \(t_{ij}\) και ο μέγιστος δυνατός χρόνος ο \(T_{max}\).
-
-\subsection{Πλεονεκτικός Κατασκευαστικός Αλγόριθμος}
-Ο \textit{Πλεονεκτικός Κατασκευαστικός Αλγόριθμος} (ΠΚΑ) είναι ένας ευρετικός κατασκευαστικός αλγόριθμος ο οποίος μπορεί να κατασκευάσει μια υψηλής ποιότητας λύση στο υπό εξέταση πρόβλημα εντός ελαχίστων δευτερολέπτων. Ξεκινάει από μία κενή λύση και σε κάθε επανάληψη του προσθέτει ένα καινούριο στοιχείο της λύσης το οποίο ικανοποιεί με τον καλύτερο τρόπο τα κριτήρια επιλογής που του έχουν τεθεί, μέχρι να μην υπάρχουν άλλα τέτοια στοιχεία και να τερματίσει \cite{Lecture2}.
-
-\subsection{Αλγόριθμος Επαναληπτικής Βελτίωσης}
-Ο \textit{Αλγόριθμος Επαναληπτικής Βελτίωσης} (ΑΕΒ) είναι ένας αλγόριθμος Τοπικής Έρευνας, κατά τον οποίο πραγματοποιούνται μεταβάσεις από λύση σε λύση, μέσω τροποποιήσεων της δομής κάθε τρέχουσας λύσης \cite{Lecture9}. Συγκεκριμένα, σε κάθε επανάληψη εξετάζονται όλες οι Γειτονικές λύσες της τρέχουσας λύση και η καλυτερη από αυτές συγκρίνεται με την τρέχουσα λύση. Αν αυτή είναι καλύτερη από την τρέχουσα, τότε θέτουμε αυτή σαν τρέχουσα και ο αλγόριθμος επαναλαμβάνεται. Αν καμιά λύση δεν βρεθεί καλύτερη, ο αλγόριθμος τερματίζεται.
-
-\subsection{Αλγόριθμος Simulated Annealing}
-Ο \textit{Αλγόριθμος Simulated Annealing} (SA) είναι ένας μεταευρετικός αλγόριθμος Τοπικής Έρευνας ο οποίος αποδέχεται ακόμα και λύσεις που υποβαθμίζουν την τιμή της αντικειμενικής συνάρτησης, ούτως ώστε να μπορεί να απεκλωβιστεί από χαμηλής ποιότητας τοπικά βέλτιστα \cite{Lecture13}. Σε κάθε επανάληψη επιλέγει με στοχαστικό τρόπο μία γειτονική λύση της τρέχουσας. Αν αυτή είναι καλύτερη της τρέχουσας αντικαθιστά την τρέχουσα και την βέλτιστη με αυτή. Αν όχι, δίνεται ένα περιθώριο μέσω της συνάρτησης \(p_t = e^{\frac{-\Delta S}{\theta_t}}\). Η θερμοκρασία θ όμως μειώνεται, με σκοπό ο αλγόριθμος να απδέχεται όλο και λιγότερες λύσεις χαμηλότερης ποιότητας.
+\subsection{First Subject}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum \cite{dummy}.
 
 %---------------------------------------------------------------------------------------------------------------------
-% ΠΚΑ
+% Section 1
 %---------------------------------------------------------------------------------------------------------------------
 
-\section{Λύση του OP με τον Πλεονεκτικό Κατασκευαστικό Αλγόριθμο}
+\section{Structures}
 
-\subsection{Δεδομένα του OP για τον ΠΚΑ}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur \ref{tab:tbl1}sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-Ο μέγιστος διαθέσιμος χρόνος για την επίλυση του OP είναι \(T_{max} = 25\). Τα δεδομένα του προβλήματος, δίνονται στους παρακάτω πίνακες. \\
+\subsection{Tables}
+
+% You can write the code of your table by hand but i highly recommend using a tool like http://www.tablesgenerator.com/latex_tables
 
 \begin{table}[H]
 \centering
-\label{my-label}
-\begin{tabular}{clrrrrrrrrrr}
-\multicolumn{1}{l}{} & \multicolumn{11}{c}{Από}                                                                                                                                                                                                                                                                                                                                                   \\
-\multicolumn{1}{l}{} &                                  & \multicolumn{1}{l}{\textbf{1}} & \multicolumn{1}{l}{\textbf{2}} & \multicolumn{1}{l}{\textbf{3}} & \multicolumn{1}{l}{\textbf{4}} & \multicolumn{1}{l}{\textbf{5}} & \multicolumn{1}{l}{\textbf{6}} & \multicolumn{1}{l}{\textbf{7}} & \multicolumn{1}{l}{\textbf{8}} & \multicolumn{1}{l}{\textbf{9}} & \multicolumn{1}{l}{\textbf{10}} \\ \cline{3-12} 
-\multirow{10}{*}{Σε} & \multicolumn{1}{l|}{\textbf{1}}  & \multicolumn{1}{r|}{0}         & \multicolumn{1}{r|}{3}         & \multicolumn{1}{r|}{6}         & \multicolumn{1}{r|}{8}         & \multicolumn{1}{r|}{10}        & \multicolumn{1}{r|}{11}        & \multicolumn{1}{r|}{13}        & \multicolumn{1}{r|}{10}        & \multicolumn{1}{r|}{17}        & \multicolumn{1}{r|}{9}          \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{\textbf{2}}  & \multicolumn{1}{r|}{3}         & \multicolumn{1}{r|}{0}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{8}         & \multicolumn{1}{r|}{10}        & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{14}        & \multicolumn{1}{r|}{8}          \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{\textbf{3}}  & \multicolumn{1}{r|}{6}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{0}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{8}         & \multicolumn{1}{r|}{9}         & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{11}        & \multicolumn{1}{r|}{3}          \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{\textbf{4}}  & \multicolumn{1}{r|}{8}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{0}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{9}         & \multicolumn{1}{r|}{7}          \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{\textbf{5}}  & \multicolumn{1}{r|}{10}        & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{8}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{0}         & \multicolumn{1}{r|}{1}         & \multicolumn{1}{r|}{3}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{11}         \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{\textbf{6}}  & \multicolumn{1}{r|}{11}        & \multicolumn{1}{r|}{8}         & \multicolumn{1}{r|}{9}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{1}         & \multicolumn{1}{r|}{0}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{9}         & \multicolumn{1}{r|}{6}         & \multicolumn{1}{r|}{12}         \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{\textbf{7}}  & \multicolumn{1}{r|}{13}        & \multicolumn{1}{r|}{10}        & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{3}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{0}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{8}          \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{\textbf{8}}  & \multicolumn{1}{r|}{10}        & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{9}         & \multicolumn{1}{r|}{5}         & \multicolumn{1}{r|}{0}         & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{3}          \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{\textbf{9}}  & \multicolumn{1}{r|}{17}        & \multicolumn{1}{r|}{14}        & \multicolumn{1}{r|}{11}        & \multicolumn{1}{r|}{9}         & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{6}         & \multicolumn{1}{r|}{4}         & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{0}         & \multicolumn{1}{r|}{10}         \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{\textbf{10}} & \multicolumn{1}{r|}{9}         & \multicolumn{1}{r|}{8}         & \multicolumn{1}{r|}{3}         & \multicolumn{1}{r|}{7}         & \multicolumn{1}{r|}{11}        & \multicolumn{1}{r|}{12}        & \multicolumn{1}{r|}{8}         & \multicolumn{1}{r|}{3}         & \multicolumn{1}{r|}{10}        & \multicolumn{1}{r|}{0}          \\ \cline{3-12} 
+\caption{A Table}
+\label{tab:tbl1}
+\begin{tabular}{llllllllll}
+\textbf{L}                      & \textbf{o}             & \textbf{r}             & \textbf{e}             & \textbf{m}             & \textbf{i}             & \textbf{p}             & \textbf{s}             & \textbf{u}             & \textbf{m}             \\ \cline{2-10} 
+\multicolumn{1}{l|}{\textbf{d}} & \multicolumn{1}{l|}{o} & \multicolumn{1}{l|}{l} & \multicolumn{1}{l|}{o} & \multicolumn{1}{l|}{r} & \multicolumn{1}{l|}{s} & \multicolumn{1}{l|}{i} & \multicolumn{1}{l|}{t} & \multicolumn{1}{l|}{a} & \multicolumn{1}{l|}{m} \\ \cline{2-10} 
+\multicolumn{1}{l|}{\textbf{e}} & \multicolumn{1}{l|}{t} & \multicolumn{1}{l|}{,} & \multicolumn{1}{l|}{c} & \multicolumn{1}{l|}{o} & \multicolumn{1}{l|}{n} & \multicolumn{1}{l|}{s} & \multicolumn{1}{l|}{e} & \multicolumn{1}{l|}{c} & \multicolumn{1}{l|}{t} \\ \cline{2-10} 
 \end{tabular}
-\caption{Αποστάσεις Κόμβων}
 \end{table}
 
-\begin{table}[H]
-\centering
-\label{my-label}
-\begin{tabular}{r|r|r|r|r|r|r|r|r|r|r|}
-\cline{2-11}
-\textbf{Κόμβος}  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \cline{2-11} 
-\textbf{Score} & 0 & 3 & 2 & 2 & 6 & 2 & 1 & 2 & 7 & 0  \\ \cline{2-11} 
-\end{tabular}
-\caption{Score Κάθε Κόμβου}
-\end{table}
-
-Τα score του πρώτου και τελευταίου κόμβου ορίζονται 0 καθώς δεν επηρεάζουν την λύση.
-
-\subsection{Απαραίτητοι Ορισμοί}
-Το OP αναφέρεται στην διεθνή βιβλιογραφία και ως Selective Travelling Salesman Problem \cite{feillet2005traveling}, το οποίο αφορά μια παραλλαγή του Travelling Salesman Problem (TSP) \cite{Lecture2}, κατά την οποία ο αλγόριθμος καλείται να λύσει ένα διπλό κριτήριο: να μεγιστοποιήσει το score "ταξιδεύοντας" σε πολλούς και ποιοτικούς κόμβους ενώ παράλληλα το κόστος (σε χρόνο) της διαδρομής παραμένει κάτω από τα επιθυμητά όρια \cite{feillet2005traveling}. Συνεπώς θα μορφοποιήσουμε τον ΠΚΑ για την επίλυση ενός TSP το παραπάνω διπλό κριτήριο:
+\subsection{List}
 
 \begin{itemize}
 
-\item \underline{Μορφή της λύσης}: Αναζητούμε τη μορφή λύσης που θα μεγιστοποιήσει το σύνολο των scores \(S_i\) που έχουν επιλεχθεί στην λύση \(S\).
-\item \underline{Στοιχείο της λύσης}: Ως "Στοιχείο της Λύσης" που θα προστίθεται σε κάθε επανάληψη του ΠΚΑ ορίζουμε οποινδήποτε κόμβο \(N\) της διάταξης.
-\item \underline{Κριτήριο επιλογής}: "Επέλεξε ως τον κόμβο \(j\) που θα εξυπηρετηθεί, τον κόμβο του οποίου το κέρδος εξυπηρέτησης προς τον χρόνο εξυπηρέτησής του, θα είναι το μέγιστο, εφόσον με την εξυπηρέτησή του απομένει αρκετός χρόνος για να εξυπηρετηθεί και ο τελικός κόμβος N." Εφόσον δηλαδή \( T_{max} - t_{S} - t_{ij} - t_{jN} > 0\).  Ως \(t_{S}\) εννοούμαι τον χρόνο που δαπανάται για την διαδρομή της μέχρι τώρα λύσης. "Αν κανένας κόμβος δεν ικανοποιεί το κριτήριο αυτό, επέλεξε τον τελικό κόμβο N και τερμάτισε."
-\item \underline{Κριτήριο αξιολόγησης}: Σύμφωνα με την εκφώνηση του προβλήματος, το κριτήριο αξιολόγισης της ολοκληρωμένης λύσεις θα υπολογίζει το συνολικό score της διαδρομής που επιλέχτηκε, δηλαδή:
+\item \underline{Lorem}: ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+\item Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+\item \underline{Duis}: aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+\item Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 \end{itemize}
 
-\begin{equation}
- \sum_{\substack{
+\subsection{Math}
+
+% This should be the best guide available for using math in LaTeX:
+% ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+
+\begin{equation} %begin equation
+ \sum_{\substack{ % equation math, follow the aforementioned guide
 		 i \in S}}
 	S_i
-\end{equation}
+\end{equation} % end equation
 
-\subsection{Υπολογισμός Πραγματικού Όφελους}
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \(p_(t1)=\theta^(-\frac{\Delta}{s})\) % inline math
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-Ο παρακάτω πίνακας υπολογίζει για κάθε πιθανή διαδρομή τo \textit{πραγματικό όφελος} αυτής της διαδρομής το οποίο ορίζεται ως: \(\frac{S_i}{t_{ij}}\), όπου i ο κόμβος προορισμού και j ο κόμβος εκκίνησης. Σύμφωνα με αυτό θα γίνεται η κατάταξη των πιθανών στοιχείων λύσης κάθε επανάληψης του αλγορίθμου.
+\section{Conclusions}
 
-\begin{table}[H]
-\centering
-\label{my-label}
-\begin{tabular}{llllllllllll}
-\multicolumn{1}{l}{} & \multicolumn{11}{c}{Από}                                                                                                                                                                                                                                                                                                                                                   \\
-\multirow{11}{*}{Σε} &                         & 1                         & 2                         & 3                         & 4                         & 5                         & 6                         & 7                         & 8                         & 9                         & 10                        \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{1}  & \multicolumn{1}{l|}{-}    & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{2}  & \multicolumn{1}{l|}{1.00} & \multicolumn{1}{l|}{-}    & \multicolumn{1}{l|}{0.60} & \multicolumn{1}{l|}{0.60} & \multicolumn{1}{l|}{0.43} & \multicolumn{1}{l|}{0.38} & \multicolumn{1}{l|}{0.30} & \multicolumn{1}{l|}{0.43} & \multicolumn{1}{l|}{0.21} & \multicolumn{1}{l|}{0.38} \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{0.33} & \multicolumn{1}{l|}{0.40} & \multicolumn{1}{l|}{-}    & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{0.25} & \multicolumn{1}{l|}{0.22} & \multicolumn{1}{l|}{0.29} & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{0.18} & \multicolumn{1}{l|}{0.67} \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{0.25} & \multicolumn{1}{l|}{0.40} & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{-}    & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{0.40} & \multicolumn{1}{l|}{0.40} & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{0.22} & \multicolumn{1}{l|}{0.29} \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{5}  & \multicolumn{1}{l|}{0.60} & \multicolumn{1}{l|}{0.86} & \multicolumn{1}{l|}{0.75} & \multicolumn{1}{l|}{1.50} & \multicolumn{1}{l|}{-}    & \multicolumn{1}{l|}{6.00} & \multicolumn{1}{l|}{2.00} & \multicolumn{1}{l|}{1.50} & \multicolumn{1}{l|}{0.86} & \multicolumn{1}{l|}{0.55} \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{6}  & \multicolumn{1}{l|}{0.18} & \multicolumn{1}{l|}{0.25} & \multicolumn{1}{l|}{0.22} & \multicolumn{1}{l|}{0.40} & \multicolumn{1}{l|}{2.00} & \multicolumn{1}{l|}{-}    & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{0.22} & \multicolumn{1}{l|}{0.33} & \multicolumn{1}{l|}{0.17} \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{0.08} & \multicolumn{1}{l|}{0.10} & \multicolumn{1}{l|}{0.14} & \multicolumn{1}{l|}{0.20} & \multicolumn{1}{l|}{0.33} & \multicolumn{1}{l|}{0.25} & \multicolumn{1}{l|}{-}    & \multicolumn{1}{l|}{0.20} & \multicolumn{1}{l|}{0.25} & \multicolumn{1}{l|}{0.13} \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{0.20} & \multicolumn{1}{l|}{0.29} & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{0.22} & \multicolumn{1}{l|}{0.40} & \multicolumn{1}{l|}{-}    & \multicolumn{1}{l|}{0.29} & \multicolumn{1}{l|}{0.67} \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{9}  & \multicolumn{1}{l|}{0.41} & \multicolumn{1}{l|}{0.50} & \multicolumn{1}{l|}{0.64} & \multicolumn{1}{l|}{0.78} & \multicolumn{1}{l|}{1.00} & \multicolumn{1}{l|}{1.17} & \multicolumn{1}{l|}{1.75} & \multicolumn{1}{l|}{1.00} & \multicolumn{1}{l|}{-}    & \multicolumn{1}{l|}{0.70} \\ \cline{3-12} 
-                     & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{0.00} & \multicolumn{1}{l|}{-}    \\ \cline{3-12} 
-\end{tabular}
-\caption{Πραγματικό Score Κίνησης}
-\end{table}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-\subsection{Εκτέλεση του ΠΚΑ}
 
-Ο ΠΚΑ που χρησιμοποιούμε διατυπωνεται ως εξής: Κατάταξε, σε κάθε επανάληψη, τα εφικτά στοιχεία της λύσης, βάσει της μέγιστης ικανοποίησης του κριτηρίου επιλογής. Σε αυτό το στάδιο η λύση αποτελείτε από τον Κόμβο 1, καθώς από αυτόν οφείλουμε να ξεκινήσουμε: \( S: \{1\}\). \\
-
-%----------------------------------------------------------------------------1----------------------------------------------------------------------------
-\underline{Επανάληψη 1}:  Εξετάζουμε τα πραγματικά οφέλη όλων των υπόλοιπων κόμβων από τον 1 και παίρνουμε τα εξής αποτελέσματα:
-
-\begin{table}[h]
-\centering
-\label{my-label}
-\begin{tabular}{l|l|l|l|l|l|l|l|l|l|}
-\cline{2-10}
-\textbf{Κόμβος} & 2    & 3    & 4    & 5    & 6    & 7    & 8    & 9    & 10   \\ \cline{2-10} 
-\textbf{Si/tij} & 1.00 & 0.33 & 0.25 & 0.60 & 0.18 & 0.08 & 0.20 & 0.41 & 0.00 \\ \cline{2-10} 
-\end{tabular}
-
-\end{table}
-
-Ο Κόμβος 2 ικανοποιεί το πρώτο κριτήριο καθώς συγκεντρώνει το μέγιστο Score προς απόσταση αλλά και το δεύτερο, καθώς  \( T_{max} - t_{12} - t_{2N} = 25 - 3 - 8 = 14 > 0\). Έτσι επιλέγουμε τον κόμβο 2 και η λύση διαμορφώνεται ώς \( S: \{1, 2\}\). \\
-
-%----------------------------------------------------------------------------2----------------------------------------------------------------------------
-\underline{Επανάληψη 2}:  Εξετάζουμε τα πραγματικά οφέλη όλων των εναπομείναντων κόμβων από τον 2  και παίρνουμε τα εξής αποτελέσματα:
-
-\begin{table}[h]
-\centering
-\begin{tabular}{l|l|l|l|l|l|l|l|l|}
-\cline{2-9}
-\textbf{Κόμβος} & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \cline{2-9} 
-\textbf{Si/tij} & 0.40 & 0.40 & 0.86 & 0.25 & 0.10 & 0.29 & 0.50 & 0.00 \\ \cline{2-9} 
-\end{tabular}
-\caption{Επανάληψη 2}
-\label{my-label}
-\end{table}
-
-Ο Κόμβος 5 ικανοποιεί το πρώτο κριτήριο καθώς συγκεντρώνει το μέγιστο Score προς απόσταση αλλά και το δεύτερο, καθώς  \( T_{max} - t_{12} - t_{25} - t_{5N} = 25 - 3 - 7 - 11 = 4 > 0\). Έτσι επιλέγουμε τον κόμβο 5 και η λύση διαμορφώνεται ώς \( S: \{1, 2,5\}\). \\
-
-%----------------------------------------------------------------------------3----------------------------------------------------------------------------
-\underline{Επανάληψη 3}:  Εξετάζουμε τα πραγματικά οφέλη όλων των εναπομείναντων κόμβων από τον 5  και παίρνουμε τα εξής αποτελέσματα:
-
-\begin{table}[h]
-\centering
-\begin{tabular}{l|l|l|l|l|l|l|l|}
-\cline{2-8}
-\textbf{Κόμβος} & 3 & 4 & 6 & 7 & 8 & 9 & 10 \\ \cline{2-8} 
-\textbf{Si/tij} & 0.25 & 0.50 & 2.00 & 0.33 & 0.50 & 1.00 & 0.00 \\ \cline{2-8} 
-\end{tabular}
-\caption{Επανάληψη 3}
-\label{my-label}
-\end{table}
-
-Ο Κόμβος 6 ικανοποιεί το πρώτο κριτήριο καθώς συγκεντρώνει το μέγιστο Score προς απόσταση αλλά και το δεύτερο, καθώς  \( T_{max} - t_{12} - t_{25} - t_{56} - t_{6N} = 25 - 3 - 7 - 1 - 12 = 2 > 0\). Έτσι επιλέγουμε τον κόμβο 6 και η λύση διαμορφώνεται ώς \( S: \{1, 2,5,6\}\). \\
-
-%----------------------------------------------------------------------------4----------------------------------------------------------------------------
-\underline{Επανάληψη 4}:  Εξετάζουμε τα πραγματικά οφέλη όλων των εναπομείναντων κόμβων από τον 6  και παίρνουμε τα εξής αποτελέσματα:
-
-\begin{table}[h]
-\centering
-\begin{tabular}{l|l|l|l|l|l|l|}
-\cline{2-7}
-\textbf{Κόμβος} & 3 & 4 & 7 & 8 & 9 & 10 \\ \cline{2-7} 
-\textbf{Si/tij} & 0.22 & 0.40 & 0.25 & 0.22 & 1.17 & 0.00 \\ \cline{2-7} 
-\end{tabular}
-\caption{Επανάληψη 4}
-\label{my-label}
-\end{table}
-
-Ο Κόμβος 9 ικανοποιεί το πρώτο κριτήριο καθώς συγκεντρώνει το μέγιστο Score προς απόσταση αλλά αποτυγχάνει στο δεύτερο, καθώς  \( T_{max} -t_{12} - t_{25} - t_{56}  - t_{69} - t_{9N} = 25 - 3 - 7 - 1 - 5 - 10 = -2 < 0\) και άρα δεν υπάρχει αρκετός χρόνος για να συμπεριληφθεί ο Κόμβος 9 στην λύση. 
-
-Ο Κόμβος 4 ικανοποιεί το πρώτο κριτήριο καθώς συγκεντρώνει το μέγιστο Score προς απόσταση αλλά και το δεύτερο, καθώς  \( T_{max} - t_{12} - t_{25} - t_{56} - t_{64} - t_{4N} = 25 - 3 - 7 - 1 - 5 - 7 = 2 > 0\). Έτσι επιλέγουμε τον κόμβο 4 και η λύση διαμορφώνεται ώς \( S: \{1,2,5,6,4\}\). \\
-
-%----------------------------------------------------------------------------5----------------------------------------------------------------------------
-\underline{Επανάληψη 5}:  Εξετάζουμε τα πραγματικά οφέλη όλων των εναπομείναντων κόμβων από τον 4  και παίρνουμε τα εξής αποτελέσματα:
-
-\begin{table}[h]
-\centering
-\begin{tabular}{l|l|l|l|l|l|}
-\cline{2-6}
-\textbf{Κόμβος} & 3 & 7 & 8 & 9 & 10 \\ \cline{2-6} 
-\textbf{Si/tij} & 0.50 & 0.20 & 0.50 & 0.78 & 0.00 \\ \cline{2-6} 
-\end{tabular}
-\caption{Επανάληψη 5}
-\label{my-label}
-\end{table}
-
-Ο Κόμβος 9 ικανοποιεί το πρώτο κριτήριο καθώς συγκεντρώνει το μέγιστο Score προς απόσταση αλλά αποτυγχάνει στο δεύτερο, καθώς  \( T_{max} -t_{12} - t_{25} - t_{56}  - t_{64} - t_{49} - t_{9N} = 25 - 3 - 7 - 1 - 5 - 9 - 10 = -10 < 0\) και άρα δεν υπάρχει αρκετός χρόνος για να συμπεριληφθεί ο Κόμβος 9 στην λύση. 
-
-Οι Κόμβοι 3 και 8 ικανοποιούν το πρώτο κριτήριο καθώς συγκεντρώνουν το μέγιστο Score προς απόσταση. Στοχαστικά επιλέγουμε τον κόμβο 3 ο οποιός και ικανοποιεί το δεύτερο κριτήριο, καθώς  \( T_{max} - t_{12} - t_{25} - t_{56} - t_{64} - t_{43} - t_{3N} = 25 - 3 - 7 - 1 - 5 - 9 - 3 = 2 > 0\). Έτσι επιλέγουμε τον κόμβο 4 και η λύση διαμορφώνεται ώς \( S: \{1,2,5,6,4,3\}\). \\
-
-%-----------------------------------------------------------------------------6---------------------------------------------------------------------------
-\underline{Επανάληψη 6}:  Εξετάζουμε τα πραγματικά οφέλη όλων των εναπομείναντων κόμβων από τον 3  και παίρνουμε τα εξής αποτελέσματα:
-
-\begin{table}[h]
-\centering
-\begin{tabular}{l|l|l|l|l|}
-\cline{2-5}
-\textbf{Κόμβος} & 7 & 8 & 9 & 10 \\ \cline{2-5} 
-\textbf{Si/tij} & 0.14 & 0.50 & 0.64 & 0.00 \\ \cline{2-5} 
-\end{tabular}
-\caption{Επανάληψη 6}
-\label{my-label}
-\end{table}
-
-Ο Κόμβος 9 ικανοποιεί το πρώτο κριτήριο καθώς συγκεντρώνει το μέγιστο Score προς απόσταση αλλά αποτυγχάνει στο δεύτερο, καθώς  \( T_{max} -t_{12} - t_{25} - t_{56}  - t_{64} - t_{43} - t_{39} - t_{9N} = 25 - 3 - 7 - 1 - 5 - 4  - 11 - 10 = -16 < 0\) και άρα δεν υπάρχει αρκετός χρόνος για να συμπεριληφθεί ο Κόμβος 9 στην λύση. 
-
-Ο Κόμβος 8 ικανοποιεί το πρώτο κριτήριο καθώς συγκεντρώνει το μέγιστο Score προς απόσταση αλλά αποτυγχάνει στο δεύτερο, καθώς  \( T_{max} -t_{12} - t_{25} - t_{56}  - t_{64} - t_{43} - t_{38} - t_{8N} = 25 - 3 - 7 - 1 - 5 - 4  - 4 - 3 = -2 < 0\) και άρα δεν υπάρχει αρκετός χρόνος για να συμπεριληφθεί ο Κόμβος 8 στην λύση. 
-
-Ο Κόμβος 7 ικανοποιεί το πρώτο κριτήριο καθώς συγκεντρώνει το μέγιστο Score προς απόσταση αλλά αποτυγχάνει στο δεύτερο, καθώς  \( T_{max} -t_{12} - t_{25} - t_{56}  - t_{64} - t_{43} - t_{37} - t_{7N} = 25 - 3 - 7 - 1 - 5 - 4  - 7 - 8 = -10 < 0\) και άρα δεν υπάρχει αρκετός χρόνος για να συμπεριληφθεί ο Κόμβος 7 στην λύση.
-
-Συνεπώς, κανέναν άλλος κόμβος από τους 2-9 δεν είναι εφικτός και σύμφωνα με το κριτήριο επιλογής ο κόμβος 10 προστίθεται στη λύση και ο αλγόριθμος τερματίζει. Η τελική λύση διαμορφώνεται ως \( S: \{1,2,5,6,4,3,10\}\) και ο χρόνος που χρησιμοποείται είναι ο \(T_{used} = t_{12} + t_{25} + t_{56} + t_{64} + t_{43} + t_{310} = 3 + 7 + 1 + 5 + 4 + 3 = 23 < 25 =  T_{max} \). Το συνολικό Score, σύμφωνα με το κριτήρι αξιλόγησης, διαμορφώνεται στο
-
-\begin{equation}
- \sum_{\substack{
-		 i \in S}}
-	S_i = S_1 + S_2 + S_5 + S_6 + S_4 + S_3 + S_{10} = 0 + 3 + 6 + 2 + 2 + 2 + 0 = 15
-\end{equation}
 
 %---------------------------------------------------------------------------------------------------------------------
-% ΑΕΒ
+% Bibliography
 %---------------------------------------------------------------------------------------------------------------------
 
-\section{Λύση του OP με τον Αλγόριθμο Επαναληπτικής Βελτίωσης}
-
-\subsection{Δεδομένα του OP για τον ΑΕΒ}
-
-Ο μέγιστος διαθέσιμος χρόνος για την επίλυση του OP είναι \(T_{max} = 23\). Τα δεδομένα του προβλήματος, δίνονται στους παρακάτω πίνακες. 
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lllllllll}
-                       & 1                       & 2                       & 3                       & 4                       & 5                       & 6                       & 7                       & 8                       \\ \cline{2-9} 
-\multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{11} & \multicolumn{1}{l|}{13} & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{17} & \multicolumn{1}{l|}{9}  \\ \cline{2-9} 
-\multicolumn{1}{l|}{2} & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{14} & \multicolumn{1}{l|}{8}  \\ \cline{2-9} 
-\multicolumn{1}{l|}{3} & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{1}  & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{11} \\ \cline{2-9} 
-\multicolumn{1}{l|}{4} & \multicolumn{1}{l|}{11} & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{1}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{9}  & \multicolumn{1}{l|}{6}  & \multicolumn{1}{l|}{12} \\ \cline{2-9} 
-\multicolumn{1}{l|}{5} & \multicolumn{1}{l|}{13} & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{5}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{8}  \\ \cline{2-9} 
-\multicolumn{1}{l|}{6} & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{9}  & \multicolumn{1}{l|}{5}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{3}  \\ \cline{2-9} 
-\multicolumn{1}{l|}{7} & \multicolumn{1}{l|}{17} & \multicolumn{1}{l|}{14} & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{6}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{10} \\ \cline{2-9} 
-\multicolumn{1}{l|}{8} & \multicolumn{1}{l|}{9}  & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{11} & \multicolumn{1}{l|}{12} & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{0}  \\ \cline{2-9} 
-\end{tabular}
-\caption{Αποστάσεις}
-\label{my-label}
-\end{table}
-
-
-\begin{table}[H]
-\centering
-\begin{tabular}{l|l|l|l|l|l|l|l|l|}
-\cline{2-9}
-\textbf{Node}  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \cline{2-9} 
-\textbf{Score} & 0 & 3 & 6 & 2 & 1 & 2 & 7 & 0 \\ \cline{2-9} 
-\end{tabular}
-\caption{Scores}
-\label{my-label}
-\end{table}
-
-Τα score του πρώτου και τελευταίου κόμβου ορίζονται 0 καθώς δεν επηρεάζουν την λύση.
-
-\subsection{Απαραίτητοι Ορισμοί}
-
-Αυτό το πρόβλημα OP μπορεί να μοντελοποιηθεί ως ένα Vehicle Routing Problem με πολλαπλές διαδρομές, του οποίου ο ΑΕΒ θα εκτελεί κίνηση 1 - 0 Exchange μεταξύ δύο διαδρομών, σύφμωνα με σχετική διεθνή βιβλιογραφία \cite{tarantilis2002distribution}. Η κίνηση \textit{1 - 0 Exchange} αναφέρεται στο ότι για τον εντοπισμό της γειτονιάς ένας κόμβος μίας διαδρομής μεταφέρεται ανάμεσα στους κόμβους της ίδιας ή άλλης διαδρομής.
-
-Για την επίλυση του προβλήματος θα ορίσουμε \(S\) την διαδρομή - λύση του OP, η οποία πρέπει να ξεκινάει από τον κόμβο 1 και να τελειώνει στον Ν και \(O\) την εικονική διαδρομή που θα περιλαμβάνει όσους κόμβους δεν έχουν επιλεχθεί για την διαδρομή στην τρέχουσα λύση.
-
-\begin{itemize}
-
-\item \underline{Μορφή της λύσης}: Αναζητούμε τη μορφή λύσης που θα μεγιστοποιήσει το σύνολο των scores \(S_i\) που έχουν επιλεχθεί στην λύση \(S\).
-\item \underline{Στοιχείο της λύσης}: Ως "Στοιχείο της Λύσης" που θα αλλάζει θέση για τον εντοπισμό των γειτονικών λύσεων ορίζουμε οποινδήποτε κόμβο \(N\) της διάταξης.
-\item \underline{Κριτήριο επιλογής}: Στο τέλος κάθε επανάληψη του ΑΕΒ,  η νέα λύση \(S_{t+1}\) θεωρείται καλύτερη όταν \(S_t < S_{t+1}\) όταν το score της λύσης είναι μεγαλύτερο και \(T(S) <= T_{max}\), όπου d() συνάρτηση που υπολογίζει τον συνολικό απαιτούμενο χρόνο της διαδρομής της λύσης S.
-\item \underline{Κριτήριο αξιολόγησης}: Σύμφωνα με την εκφώνηση του προβλήματος, το κριτήριο αξιολόγισης της ολοκληρωμένης λύσεις θα υπολογίζει το συνολικό score της διαδρομής που επιλέχτηκε, δηλαδή:
-
-\end{itemize}
-
-\begin{equation}
- \sum_{\substack{
-		 i \in S}}
-	S_i
-\end{equation}
-
-\underline{Σημείωση 1}: Οι γειτωνιές οι οποίες είναι αδύνατες λόγω της φύσης του προβλήματος δεν αναγράφονται. Αυτές είναι όσες συμπεριλαμβάνουν κίνηση των 1 και 8, καθώς αυτοί πρέπει οπωσδήποτε να είναι οι κόμβοι εκκίνησης και τερματισμού. \\
-
-\underline{Σημείωση 2}: Οι γειτονιές οι οποίες είναι αδιάφορες λόγω της φύσης του προβλήματος δεν αναγράφονται. Αυτές είναι όσες αφορούν ανακατατάξεις μόνο εντός της εικονικής διαδρομής Ο. \\
-
-\subsection{Εκτέλεση του ΑΕΒ}
-
-Έστω ότι χρησιμοποιείται στοχαστικός κατασκευαστικός αλγόριθμος για την κατασκευή της αρχικής λύσης:
-
-\(S_0 = {1,3,4,8}\) οπότε οι υπόλοιπου κόμβοι τοποθετούνται στην \(Ο_0 = {2,5,6,7}\). \\
-\(d(S) = d_{13} + d_{34} + d_{48} = 10 + 1 + 12 = 23 <= 23\) και \\
-\(Score = S_1 + S_3 + S_4 + S_8 = 0 + 6 + 2 + 0 = 8\) \\
-
-%---------------------------------------------------------------------1-----------------------------------------------------------------------------
-
-\underline{Επανάληψη 1}: Με κίνηση 1 - 0 Exchange, εξερευνούμε όλη την γειτονιά της \(S_0\):
-
-\begin{table}[H]
-\centering
-\label{my-label}
-\begin{tabular}{l}
-S\_1 = \{1,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,3,5,6,7\} και d(S) < = 23 και Score =  2\\
-S\_1 = \{1,3,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,4,5,6,7\} και d(S) < = 23 και Score =  6\\
-S\_1 = \{1,2,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,6,7\} και d(S) < = 23 και Score =  11\\
-S\_1 = \{1,3,2,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,6,7\} και d(S) > 23\\
-S\_1 = \{1,2,4,3,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,6,7\} και d(S) > 23\\
-S\_1 = \{1,5,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,6,7\} και d(S) > 23\\
-S\_1 = \{1,3,5,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,6,7\} και d(S) > 23\\
-S\_1 = \{1,3,4,5,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,6,7\} και d(S) < = 23 και Score =  9\\
-S\_1 = \{1,6,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,5,7\} και d(S) > 23\\
-S\_1 = \{1,3,6,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,5,7\} και d(S) > 23 \\
-S\_1 = \{1,3,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,5,7\} και d(S) < = 23 και Score =  10\\
-S\_1 = \{1,7,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,5,6\} και d(S) > 23\\
-S\_1 = \{1,3,7,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,5,6\} και d(S) > 23 \\
-S\_1 = \{1,3,4,7,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,5,6\} και d(S) > 23\\
-\end{tabular}
-\end{table}
-
-Η καλύτερη λύση είναι η \(S = \{1,2,3,4,8\}\)  που προκύπτει από την για \(i = 1 and j = 1, i \in S_0,  j \in O_0\) με Score = 11 > 8.	Επομένως θα είναι και η νέα τρέχουσα λύση. \\
-
-%---------------------------------------------------------------------2-----------------------------------------------------------------------------
-
-\underline{Επανάληψη 2}: Με κίνηση 1 - 0 Exchange, εξερευνούμε όλη την γειτονιά της \(S_1\):
-
-\begin{table}[H]
-\centering
-\label{my-label}
-\begin{tabular}{l}
-S\_2 = \{1,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,5,6,7\} και d(S) > 23 και Score =  8\\
-S\_2 = \{1,2,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{3,5,6,7\} και d(S) > 23 και Score =  5\\
-S\_2 = \{1,2,3,8\} οπότε τα υπόλοιπα Ο\_1 = \{4,5,6,7\} και d(S) <= 23 και Score =  5\\
-S\_2 = \{1,5,2,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{6,7\} και d(S) > 23  \\
-S\_2 = \{1,2,5,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{6,7\} και d(S) > 23  \\
-S\_2 = \{1,2,3,5,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{6,7\} και d(S) > 23  \\
-S\_2 = \{1,2,3,4,5,8\} οπότε τα υπόλοιπα Ο\_1 = \{6,7\} και d(S) <= 23 και Score =  12\\
-S\_2 = \{1,6,2,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,7\} και d(S) > 23  \\
-S\_2 = \{1,2,6,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,7\} και d(S) > 23  \\
-S\_2 = \{1,2,3,6,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,7\} και d(S) > 23  \\
-S\_2 = \{1,2,3,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,7\} και d(S) <= 23 και Score =  13\\
-S\_2 = \{1,7,2,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,6\} και d(S) > 23  \\
-S\_2 = \{1,2,7,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,6\} και d(S) > 23  \\
-S\_2 = \{1,2,3,7,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,6\} και d(S) > 23  \\
-S\_2 = \{1,2,3,4,7,8\} οπότε τα υπόλοιπα Ο\_1 = \{5,6\} και d(S) > 23  \\
-\end{tabular}
-\end{table}
-
-Η καλύτερη λύση είναι η \( S = \{1,2,3,4,6,8\}\)  που προκύπτει από την για \(i = 4 and j = 2, i \in S_1,  j \in O_1\) με Score = 13 > 12.	Επομένως θα είναι και η νέα τρέχουσα λύση. \\
-
-%---------------------------------------------------------------------3-----------------------------------------------------------------------------
-
-\underline{Επανάληψη 3}: Με κίνηση 1 - 0 Exchange, εξερευνούμε όλη την γειτονιά της \(S_2\):
-
-\begin{table}[H]
-\centering
-\label{my-label}
-\begin{tabular}{l}
-S\_3 = \{1,3,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{2,5,7\} και d(S) <= 23 και Score =  10\\
-S\_3 = \{1,2,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{3,5,7\} και d(S) <= 23 και Score =  7\\
-S\_3 = \{1,2,3,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{4,5,7\} και d(S) <= 23 και Score =  11\\
-S\_3 = \{1,2,3,4,8\} οπότε τα υπόλοιπα Ο\_1 = \{6,5,7\} και d(S) <= 23 και Score =  11\\
-S\_3 = \{1,5,2,3,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{7\} και d(S) > 23  \\
-S\_3 = \{1,2,5,3,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{7\} και d(S) > 23  \\
-S\_3 = \{1,2,3,5,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{7\} και d(S) > 23  \\
-S\_3 = \{1,2,3,4,5,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{7\} και d(S) <= 23 και Score =  14\\
-S\_3 = \{1,2,3,4,6,5,8\} οπότε τα υπόλοιπα Ο\_1 = \{7\} και d(S) > 23  \\
-S\_3 = \{1,7,2,3,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{5\} και d(S) > 23  \\
-S\_3 = \{1,2,7,3,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{5\} και d(S) > 23  \\
-S\_3 = \{1,2,3,7,4,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{5\} και d(S) > 23  \\
-S\_3 = \{1,2,3,4,7,6,8\} οπότε τα υπόλοιπα Ο\_1 = \{5\} και d(S) > 23  \\
-S\_3 = \{1,2,3,4,6,7,8\} οπότε τα υπόλοιπα Ο\_1 = \{5\} και d(S) > 23  \\
-\end{tabular}
-\end{table}
-
-Η καλύτερη λύση είναι η \(S = \{1,2,3,4,5,6,8\}\)  που προκύπτει από την για \(i = 4 and j = 1, i \in S_2,  j \in O_2\) με Score = 14 > 13.	Επομένως θα είναι και η νέα τρέχουσα λύση. \\
-
-H λύση \(S = \{1,2,3,4,5,6,8\},  O = \{7\}, d(S) = T_{max} \) αποτελεί τοπικό ελάχιστο και ταυτόχρονα καλύτερη λύση του υπό εξέταση προβλήματος, καθώς οποιαδήποτε επόμενη αντίστοιχη επανάληψη έχει εφικτές λύσεις μόνο με λιγότερους ή ίδιους κόμβους και έτσι δεν μπορεί να αυξήσει το score.		
-
-
-%---------------------------------------------------------------------------------------------------------------------
-% SA
-%---------------------------------------------------------------------------------------------------------------------
-
-\section{Λύση του OP με τον Αλγόριθμο Simulated Annealing}
-
-\subsection{Δεδομένα του OP για τον AS}
-
-Ο μέγιστος διαθέσιμος χρόνος για την επίλυση του OP είναι \(T_{max} = 23\). Τα δεδομένα του προβλήματος, δίνονται στους παρακάτω πίνακες (δίνονται ίδια με τα δεδομένα του OP για τον ΑΕΒ). 
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lllllllll}
-                       & 1                       & 2                       & 3                       & 4                       & 5                       & 6                       & 7                       & 8                       \\ \cline{2-9} 
-\multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{11} & \multicolumn{1}{l|}{13} & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{17} & \multicolumn{1}{l|}{9}  \\ \cline{2-9} 
-\multicolumn{1}{l|}{2} & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{14} & \multicolumn{1}{l|}{8}  \\ \cline{2-9} 
-\multicolumn{1}{l|}{3} & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{1}  & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{11} \\ \cline{2-9} 
-\multicolumn{1}{l|}{4} & \multicolumn{1}{l|}{11} & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{1}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{9}  & \multicolumn{1}{l|}{6}  & \multicolumn{1}{l|}{12} \\ \cline{2-9} 
-\multicolumn{1}{l|}{5} & \multicolumn{1}{l|}{13} & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{5}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{8}  \\ \cline{2-9} 
-\multicolumn{1}{l|}{6} & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{9}  & \multicolumn{1}{l|}{5}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{3}  \\ \cline{2-9} 
-\multicolumn{1}{l|}{7} & \multicolumn{1}{l|}{17} & \multicolumn{1}{l|}{14} & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{6}  & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{7}  & \multicolumn{1}{l|}{0}  & \multicolumn{1}{l|}{10} \\ \cline{2-9} 
-\multicolumn{1}{l|}{8} & \multicolumn{1}{l|}{9}  & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{11} & \multicolumn{1}{l|}{12} & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{3}  & \multicolumn{1}{l|}{10} & \multicolumn{1}{l|}{0}  \\ \cline{2-9} 
-\end{tabular}
-\caption{Αποστάσεις}
-\label{my-label}
-\end{table}
-
-
-\begin{table}[H]
-\centering
-\begin{tabular}{l|l|l|l|l|l|l|l|l|}
-\cline{2-9}
-\textbf{Node}  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \cline{2-9} 
-\textbf{Score} & 0 & 3 & 6 & 2 & 1 & 2 & 7 & 0 \\ \cline{2-9} 
-\end{tabular}
-\caption{Scores}
-\label{my-label}
-\end{table}
-
-Τα score του πρώτου και τελευταίου κόμβου ορίζονται 0 καθώς δεν επηρεάζουν την λύση.
-
-\subsection{Απαραίτητοι Ορισμοί}
-
-\begin{itemize}
-
-\item \underline{Μορφή της λύσης}: Αναζητούμε τη μορφή λύσης που θα μεγιστοποιήσει το σύνολο των scores \(S_i\) που έχουν επιλεχθεί στην λύση \(S\).
-\item \underline{Στοιχείο της λύσης}: Ως "Στοιχείο της Λύσης" που θα αλλάζει θέση για τον της γειτονικής λύσης ορίζουμε οποινδήποτε κόμβο \(N\) της διάταξης.
-\item \underline{Κριτήριο επιλογής}: Στο τέλος κάθε επανάληψη του AS,  η νέα λύση \(S'\) θεωρείται καλύτερη όταν \(S < S'\) όταν το score της λύσης είναι μεγαλύτερο και \(T(S') <= T_{max}\), όπου d() συνάρτηση που υπολογίζει τον συνολικό απαιτούμενο χρόνο της διαδρομής της λύσης S'.
-\item \underline{Κριτήριο αξιολόγησης}: Σύμφωνα με την εκφώνηση του προβλήματος, το κριτήριο αξιολόγισης της ολοκληρωμένης λύσεις θα υπολογίζει το συνολικό score της διαδρομής που επιλέχτηκε, δηλαδή:
-
-\end{itemize}
-
-\begin{equation}
- \sum_{\substack{
-		 i \in S}}
-	S_i
-\end{equation}
-
-Θα χρησιμοποιήσουμε τον αλγόριθμο Simulated Annealing λαμβάνοντας υπόψιν ότι η θερμοκρασία \(\theta_1 = 90 \) θα μειωθεί στο μισό εκτελώντας 4 επαναλήωψεις στον εσωτερικό κόμβο και 2 στον εξωτερικό. \\
-
-Η δομή της λύσης είναι \( S = \{S_1…S_i\}\) και εκφράζει την διαδρομή που επιλέγει ο αλγόριθμος για το OP. Παράλληλα η διαδρομή \(O = \{O_1…O_j\}\) αφορά τους κόμβους που βρίσκονται εκτός της κύριας λύσης.   Οι κόμβοι 1 και Ν βρίσκονται μόνιμα στην θέση τους και δεν επιλέγονται από τον αλγόριθμο για μετατόπιση. Κατά μήκος της γραμμής η οποία εκφράζει την υλοποίηση του SA, όσοι κόμβοι τοποθετούνται ανάμεσα στους 1 και Ν θα αποτελούν την λύση, μαζί με τους 1 και Ν ενώ, όσοι από Ν μέχρι το τέλος της γραμμής θα βρίσκονται εκτός της λύσης. \\
-
-\underline{Σημείωση}: Σε κάθε επανάληψη, το κριτήριο του αλγορίθμου θα ελέγχει αν η λύση που παράχθηκε είναι ή όχι καλύτερη της τρέχουσας λύσης και αν η λύση αυτή είναι εφικτή, όταν \(d(S') <= Tmax\). Η d είναι συνάρτηση η οποία υπολογίζει την συνολική απόσταση την οποία διανύει η λύση που δίνεται. Ακόμη, αν η λύση είναι εφικτή αλλά όχι καλύτερη, μπορεί επίσης να συνεχίσει τον αλγόριθμο στον εσωτερικό βρόγχο αν το \(p_t = e^{\frac{-\Delta S}{\theta_t}}\) είναι μεγαλύτερο από τον επόμενο αριθμό της γεννήτριας τυχαίων αριθμών.
-
-\subsection{Εκτέλεση του SA}
-
-Αρχικά, έστω ότι χρησιμοποιείται ένας στοχαστικός κατασκευαστικός αλγόριθμος για την κατασκευή της αρχικής λύσης:
-
-\(S, S_{best}=\{1,3,4,8\}\), οπότε οι υπόλοιποι \(O=\{2,5,6,7\}\) και
-\(d(S) = d_{13}+_{d34}+d_{48} = 10 + 1 + 12 = 23 <= T_{max}\). 
-Επίσης, παράγουμε τους εξής τυχαίους αριθμούς:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
-\hline
-0.735 & 0.029 & 0.809 & 0.985 & 0.553 & 0.880 & 0.771 & 0.343 & 0.818 \\ \hline
-0.348 & 0.519 & 0.495 & 0.731 & 0.749 & 0.900 & 0.993 & 0.120 & 0.867 \\ \hline
-0.862 & 0.901 & 0.885 & 0.459 & 0.460 & 0.052 & 0.944 & 0.500 & 0.408 \\ \hline
-0.053 & 0.717 & 0.423 & 0.171 & 0.904 & 0.793 & 0.764 & 0.838 & 0.400 \\ \hline
-0.245 & 0.390 & 0.515 & 0.649 & 0.382 & 0.820 & 0.240 & 0.085 & 0.300 \\ \hline
-0.245 & 0.023 & 0.082 & 0.848 & 0.901 & 0.498 & 0.338 & 0.261 & 0.987 \\ \hline
-0.578 & 0.133 & 0.357 & 0.205 & 0.588 & 0.029 & 0.336 & 0.769 & 0.120 \\ \hline
-0.345 & 0.044 & 0.710 & 0.866 & 0.134 & 0.477 & 0.316 & 0.802 & 0.438 \\ \hline
-\end{tabular}
-\caption{Γεννήτρια Τυχαίων Αριθμών}
-\label{my-label}
-\end{table}
-
-%------------------------------------------------------------------1-----------------------------------------------------------------------
-
-\underline{Επανάληψη 1, θ = 90}: Ψάχνουμε τους κόμβους που θα μετέχουν στην κίνηση. Αυτοί επιλέγονται με στοχαστικό τρόπο. Σύμφωνα με τη γεννήτρια τυχαίων αριθμών, στον αριστερό πίνακα επιλέγουμε τον κόμβο που θα μετακινηθεί σε κάποια άλλη θέση και στον δεξιό πίνακα την θέση αυτή. Οι νέες θέσεις αφορούν την τοποθέτηση στην διαδρομή ανάμεσα σε δύο άλλους κόμβους και την αφαίρεση από την διαδρομή. Οι κόμβοι 1 και 8 δεν μετέχουν στην κίνηση καθώς πρέπει να είναι πάντα ο πρώτος και τελευταίος κόμβος:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lllllllllll}
-\multicolumn{1}{|l}{1}     & \multicolumn{1}{l|}{\textbf{}} & 8                         &                           &                                   &      &                       &                            &                                     &                            &      \\
-\multicolumn{1}{|l|}{3}    & \multicolumn{1}{l|}{4}         & \multicolumn{1}{l|}{2}    & \multicolumn{1}{l|}{5}    & \multicolumn{1}{l|}{\textbf{6}}   & 7    & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{1 - 3} & \multicolumn{1}{l|}{\textbf{3 - 4}} & \multicolumn{1}{l|}{4 - 8} & out  \\ \cline{1-6} \cline{8-11} 
-\multicolumn{1}{|l|}{1.66} & \multicolumn{1}{l|}{3.32}      & \multicolumn{1}{l|}{4.98} & \multicolumn{1}{l|}{6.64} & \multicolumn{1}{l|}{\textbf{8.3}} & 10.00 & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{0.25}  & \multicolumn{1}{l|}{\textbf{0.50}}  & \multicolumn{1}{l|}{0.75}  & 1.00 \\
-                           &                                &                           &                           & \textbf{0.735}                    &      &                       &                            & \textbf{0.348}                      &                            &     
-\end{tabular}
-\caption{SA Επανάληψη 1, θ = 90}
-\label{my-label}
-\end{table}
-
-Άρα \(S'=\{1,3,6,4,8\}\). Η S' είναι καλύτερη της S με \(S'=10>8=S\) αλλά έχει \(d(S) > T_{max}\) και δεν είναι εφικτή. Συνεπώς η S'  απορρίπτεται. \\
-
-%------------------------------------------------------------------2-----------------------------------------------------------------------
-
-\underline{Επανάληψη 2, θ = 90}: Ψάχνουμε τους κόμβους που θα μετέχουν στην κίνηση με όμοι τρόπο. Συνεπώς συνεχίζουμε στην επόμενη επανάληψη με την προηγούμενη \(S = \{1,3,4,8\}\):
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lllllllllll}
-\multicolumn{1}{|l}{1}     & \multicolumn{1}{l|}{\textbf{}} & 8                         &                           &                          &                &                       &                                     &                            &                            &      \\
-\multicolumn{1}{|l|}{3}    & \multicolumn{1}{l|}{4}         & \multicolumn{1}{l|}{2}    & \multicolumn{1}{l|}{5}    & \multicolumn{1}{l|}{6}   & \textbf{7}     & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{\textbf{1 - 3}} & \multicolumn{1}{l|}{3 - 4} & \multicolumn{1}{l|}{4 - 8} & out  \\ \cline{1-6} \cline{8-11} 
-\multicolumn{1}{|l|}{1.66} & \multicolumn{1}{l|}{3.32}      & \multicolumn{1}{l|}{4.98} & \multicolumn{1}{l|}{6.64} & \multicolumn{1}{l|}{8.30} & \textbf{10.00}  & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{\textbf{0.25}}  & \multicolumn{1}{l|}{0.50}  & \multicolumn{1}{l|}{0.75}  & 1.00 \\
-                           &                                &                           &                           &                          & \textbf{0.862} &                       & \textbf{0.053}                      &                            &                            &     
-\end{tabular}
-\caption{SA Επανάληψη 2, θ = 90}
-\label{my-label}
-\end{table}
-
-Άρα \(S'=\{1,7,3,4,8\}\). Η S' είναι καλύτερη της S με \(S'=15>8=S\) αλλά έχει \(d(S) > T_{max}\) και δεν είναι εφικτή. Συνεπώς η S'  απορρίπτεται. \\
-
-%------------------------------------------------------------------3-----------------------------------------------------------------------
-
-\underline{Επανάληψη 3, θ = 90}: Ψάχνουμε τους κόμβους που θα μετέχουν στην κίνηση με όμοι τρόπο. Συνεπώς συνεχίζουμε στην επόμενη επανάληψη με την προηγούμενη \(S = \{1,3,4,8\}\):
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lllllllllll}
-\multicolumn{1}{|l}{1}     & \multicolumn{1}{l|}{\textbf{}}     & 8                         &                           &                          &      &                                &                                     &                            &                            &      \\
-\multicolumn{1}{|l|}{3}    & \multicolumn{1}{l|}{\textbf{4}}    & \multicolumn{1}{l|}{2}    & \multicolumn{1}{l|}{5}    & \multicolumn{1}{l|}{6}   & 7    & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{1 - 3}} & \multicolumn{1}{l|}{3 - 4} & \multicolumn{1}{l|}{4 - 8} & out  \\ \cline{1-6} \cline{8-11} 
-\multicolumn{1}{|l|}{1.66} & \multicolumn{1}{l|}{\textbf{3.32}} & \multicolumn{1}{l|}{4.98} & \multicolumn{1}{l|}{6.64} & \multicolumn{1}{l|}{8.30} & 10.00 & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{0.25}}  & \multicolumn{1}{l|}{0.50}  & \multicolumn{1}{l|}{0.75}  & 1.00 \\
-                           & \textbf{0.245}                     &                           &                           &                          &      & \textbf{}                      & \textbf{0.245}                      &                            &                            &     
-\end{tabular}
-\caption{SA Επανάληψη 3, θ = 90}
-\label{my-label}
-\end{table}
-
-Άρα \(S'=\{1,4,3,8\}\). Η S' δεν είναι καλύτερη της S με \(S'=S\) αλλά έχει \(d(S) = T_{max}\) και είναι εφικτή. Σύμφωνα με τον AS υπολογίζουμε την \(p(S,S',θ) =  e^{\frac{-\Delta S}{\theta_t}} = 1 > 0.578\) που είναι ο επόμενος τυχαίος αριθμός και συνεπώς η λύση \(S = S' = \{1,4,3,8\}\). \\
-
-%------------------------------------------------------------------4-----------------------------------------------------------------------
-
-\underline{Επανάληψη 4, θ = 90}: Ψάχνουμε τους κόμβους που θα μετέχουν στην κίνηση με όμοι τρόπο. Συνεπώς συνεχίζουμε στην επόμενη επανάληψη με την νέα \(S = \{1,4,3,8\}\):
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lllllllllll}
-\multicolumn{1}{|l}{1}     & \multicolumn{1}{l|}{\textbf{}} & 8                                  &                           &                          &      &                                &                                     &                            &                            &      \\
-\multicolumn{1}{|l|}{4}    & \multicolumn{1}{l|}{3}         & \multicolumn{1}{l|}{\textbf{2}}    & \multicolumn{1}{l|}{5}    & \multicolumn{1}{l|}{6}   & 7    & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{1 - 3}} & \multicolumn{1}{l|}{4 - 3} & \multicolumn{1}{l|}{3 - 8} & out  \\ \cline{1-6} \cline{8-11} 
-\multicolumn{1}{|l|}{1.66} & \multicolumn{1}{l|}{3.32}      & \multicolumn{1}{l|}{\textbf{4.98}} & \multicolumn{1}{l|}{6.64} & \multicolumn{1}{l|}{8.30} & 10.00 & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{0.25}}  & \multicolumn{1}{l|}{0.50}  & \multicolumn{1}{l|}{0.75}  & 1.00 \\
-                           &                                & \textbf{0.345}                     &                           &                          &      & \textbf{}                      & \textbf{0.029}                      &                            &                            &     
-\end{tabular}
-\caption{SA Επανάληψη 4, θ = 90}
-\label{my-label}
-\end{table}
-
-Άρα \(S'=\{1,2,4,3,8\}\). Η S' είναι καλύτερη της S με \(S'=11>8=S\) και επειδή έχει \(d(S) = T_{max}\) είναι και εφικτή. Συνεπώς θέτουμε \(S = S' = \{1,2,4,3,8\}\). Ακόμη, επειδή \(S>S_{best}\) θέτουμε και \(S_{best} = S = \{1,2,4,3,8\}\). \\
-
-Τέλος, καθώς έχουν ολοκληρωθεί 4 επαναλήψεις του εσωτερικού βρόγχου, η θερμοκρασία μειώνεται στο μισό: \(\theta = \frac{\theta}{2} = 45\). \\
-
-%------------------------------------------------------------------5-----------------------------------------------------------------------
-
-\underline{Επανάληψη 1, θ = 45}: Ψάχνουμε τους κόμβους που θα μετέχουν στην κίνηση με όμοι τρόπο. Συνεπώς συνεχίζουμε στην επόμενη επανάληψη με την νέα \(S = \{1,2,4,3,8\}\):
-
-\begin{table}[H]
-\centering
-\begin{tabular}{llllllllllll}
-\multicolumn{1}{|l}{1}     & \textbf{}                 & \multicolumn{1}{l|}{}              & 8                         &                           &       &                                &                            &                            &                            &                            &                \\
-\multicolumn{1}{|l|}{2}    & \multicolumn{1}{l|}{4}    & \multicolumn{1}{l|}{\textbf{3}}    & \multicolumn{1}{l|}{5}    & \multicolumn{1}{l|}{6}    & 7     & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{1 - 2} & \multicolumn{1}{l|}{2 - 4} & \multicolumn{1}{l|}{4 - 3} & \multicolumn{1}{l|}{3 - 8} & \textbf{out}   \\ \cline{1-6} \cline{8-12} 
-\multicolumn{1}{|l|}{1.66} & \multicolumn{1}{l|}{3.32} & \multicolumn{1}{l|}{\textbf{4.98}} & \multicolumn{1}{l|}{6.64} & \multicolumn{1}{l|}{8.30} & 10.00 & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{0.20}  & \multicolumn{1}{l|}{0.40}  & \multicolumn{1}{l|}{0.60}  & \multicolumn{1}{l|}{0.80}  & \textbf{1.00}  \\
-                           &                           & \textbf{4.569}                     &                           &                           &       & \textbf{}                      &                            &                            &                            &                            & \textbf{0.901}
-\end{tabular}
-\caption{SA Επανάληψη 1, θ = 45}
-\label{my-label}
-\end{table}
-
-Άρα \(S'=\{1,2,4,8\}\). Η S' δεν είναι καλύτερη της S με \(S'=10<11=S\) αλλά επειδή έχει \(d(S) < T_{max}\) είναι εφικτή. Σύμφωνα με τον AS υπολογίζουμε την \(p(S,S',\theta) =  e^{\frac{-\Delta S}{\theta_t}} = 0.978 > 0.717\) που είναι ο επόμενος τυχαίος αριθμός και συνεπώς η λύση \(S = S' = \{1,2,4,8\}\).
-
-%------------------------------------------------------------------6-----------------------------------------------------------------------
-
-\underline{Επανάληψη 2, θ = 45}: Ψάχνουμε τους κόμβους που θα μετέχουν στην κίνηση με όμοι τρόπο. Συνεπώς συνεχίζουμε στην επόμενη επανάληψη με την νέα \(S = \{1,2,4,8\}\):
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lllllllllll}
-\multicolumn{1}{|l}{1}     & \multicolumn{1}{l|}{\textbf{}} & 8                                  &                           &                           &       &                                &                                     &                            &                            &      \\
-\multicolumn{1}{|l|}{2}    & \multicolumn{1}{l|}{4}         & \multicolumn{1}{l|}{\textbf{3}}    & \multicolumn{1}{l|}{5}    & \multicolumn{1}{l|}{6}    & 7     & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{1 - 2}} & \multicolumn{1}{l|}{2 - 4} & \multicolumn{1}{l|}{4 - 8} & out  \\ \cline{1-6} \cline{8-11} 
-\multicolumn{1}{|l|}{1.66} & \multicolumn{1}{l|}{3.32}      & \multicolumn{1}{l|}{\textbf{4.98}} & \multicolumn{1}{l|}{6.64} & \multicolumn{1}{l|}{8.30} & 10.00 & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{0.25}}  & \multicolumn{1}{l|}{0.50}  & \multicolumn{1}{l|}{0.75}  & 1.00 \\
-                           &                                & \textbf{0.390}                     &                           &                           &       & \textbf{}                      & \textbf{0.023}                      &                            &                            &     
-\end{tabular}
-\caption{SA Επανάληψη 2, θ = 45}
-\label{my-label}
-\end{table}
-
-Άρα \(S'=\{1,3,2,4,8\}\). Η S' είναι καλύτερη της S με \(S'=11<10=S\) αλλά επειδή έχει \(d(S) > T_{max}\) δεν είναι εφικτή.  Συνεπώς η S'  απορρίπτεται. \\
-
-%------------------------------------------------------------------7-----------------------------------------------------------------------
-
-\underline{Επανάληψη 3, θ = 45}: Ψάχνουμε τους κόμβους που θα μετέχουν στην κίνηση με όμοι τρόπο. Συνεπώς συνεχίζουμε στην επόμενη επανάληψη με την προηγούμενη \(S = \{1,2,4,8\}\):
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lllllllll}
-\multicolumn{1}{|l}{1}              & \multicolumn{1}{l|}{\textbf{}} & 8                         &                           &                           &       &                                &                                     &      \\
-\multicolumn{1}{|l|}{\textbf{2}}    & \multicolumn{1}{l|}{4}         & \multicolumn{1}{l|}{3}    & \multicolumn{1}{l|}{5}    & \multicolumn{1}{l|}{6}    & 7     & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{4 - 8}} & out  \\ \cline{1-6} \cline{8-9} 
-\multicolumn{1}{|l|}{\textbf{1.66}} & \multicolumn{1}{l|}{3.32}      & \multicolumn{1}{l|}{4.98} & \multicolumn{1}{l|}{6.64} & \multicolumn{1}{l|}{8.30} & 10.00 & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{0.25}}  & 0.50 \\
-\textbf{0.133}                      &                                &                           &                           &                           &       & \textbf{}                      & \textbf{0.044}                      &     
-\end{tabular}
-\caption{SA Επανάληψη 3, θ = 45}
-\label{my-label}
-\end{table}
-
-Άρα \(S'=\{1,4,2,8\}\). Η S' δεν είναι καλύτερη της S με \(S'=S\) και επειδή έχει \(d(S) > T_{max}\) δεν είναι εφικτή.  Συνεπώς η S'  απορρίπτεται. \\
-
-%------------------------------------------------------------------8-----------------------------------------------------------------------
-
-\underline{Επανάληψη 4, θ = 45}: Ψάχνουμε τους κόμβους που θα μετέχουν στην κίνηση με όμοι τρόπο. Συνεπώς συνεχίζουμε στην επόμενη επανάληψη με την προηγούμενη \(S = \{1,2,4,8\}\):
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lllllllllll}
-\multicolumn{1}{|l}{1}     & \multicolumn{1}{l|}{\textbf{}} & 8                         &                           &                                    &       &                                &                            &                            &                                     &      \\
-\multicolumn{1}{|l|}{2}    & \multicolumn{1}{l|}{4}         & \multicolumn{1}{l|}{3}    & \multicolumn{1}{l|}{5}    & \multicolumn{1}{l|}{\textbf{6}}    & 7     & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{1 - 2} & \multicolumn{1}{l|}{2 - 4} & \multicolumn{1}{l|}{\textbf{4 - 8}} & out  \\ \cline{1-6} \cline{8-11} 
-\multicolumn{1}{|l|}{1.66} & \multicolumn{1}{l|}{3.32}      & \multicolumn{1}{l|}{4.98} & \multicolumn{1}{l|}{6.64} & \multicolumn{1}{l|}{\textbf{8.30}} & 10.00 & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{0.25}  & \multicolumn{1}{l|}{0.50}  & \multicolumn{1}{l|}{\textbf{0.75}}  & 1.00 \\
-                           &                                &                           &                           & \textbf{0.809}                     &       & \textbf{}                      &                            &                            & \textbf{0.519}                      &     
-\end{tabular}
-\caption{SA Επανάληψη 4, θ = 45}
-\label{my-label}
-\end{table}
-
-Άρα \(S'=\{1,2,4,6,8\}\). Η S' είναι καλύτερη της S με \(S'=11>10=S\) και επειδή έχει \(d(S) < T_{max}\) είναι και εφικτή. Συνεπώς θέτουμε \(S = S' = \{1,2,4,6,8\}\). Ακόμη, αφού \(S=S_{best}\) η καλύτερη λύση παραμένει η προηγούμενη σύμφωνα με το κριτήριο του SA. \\
-
-Τέλος, καθώς έχουν ολοκληρωθεί 4 επαναλήψεις του εσωτερικού βρόγχου και 2 του εξωτερικού, ο αλγόριθμος τερματίζει. Η τελική λύση είναι \(S_{best} = \{1,2,4,3,8\}\), με \(score = 11\) και \(d(S) = T_{max}\). \\
-
-\subsection{Συμπεράσματα}
-Παρατηρούμε πως η τελική λύση δεν είναι η βέλτιστη δυνατή του προβλήματος, καθώς βρέθηκε καλύτερη από τον ΑΕΒ. Όμως επιτεύθηκε ένα score 12\% μικρότερο του βέλτιστου δυνατού με 81.3\% λιγότερους υπολογισμούς score και d(S) (8 με τον SA και 43 με τον ΑΕΒ). Εδώ φαίνεται η αξία των Ευρετικών και των Μεταευρετικών Αλγορίθμων, καθώς με το ένα πέμπτο του κόστους υπολογισμού, βρέθηκε μία σχεδόν τέλεια λύση. Στην καθημερινότητα μία επιχείρησης που κάνει συνεχώς τέτοιους υπολογισμούς, η εξοικονόμηση πόρων και χρόνου θα μπορούσε να έχε μεγαλύτερη αξία από την έρευση μίας λίγο καλύτερης λύσης, ειδικά όταν τα προβλήματα αυτά είναι επαναλαμβανόμενα.
-
-
-%---------------------------------------------------------------------------------------------------------------------
-% Βιβλιογραφία
-%---------------------------------------------------------------------------------------------------------------------
 \newpage
-\bibliography{Lattas_MEDEBE}
-\bibliographystyle{IEEEtr}
+\bibliography{Report-Template} % .bib file name. Do not add ".bib"
+\bibliographystyle{IEEEtr} % Bibliography style. Find more styles at
+% https://www.sharelatex.com/learn/Bibtex_bibliography_styles
+
+%If you include bibliography without a single reference inside the document, the TeX file will not compile.
 
 \end{document}
