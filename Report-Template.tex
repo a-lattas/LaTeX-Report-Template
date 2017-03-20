@@ -21,6 +21,34 @@
 %\usepackage{xgreek} % Greek support
 %\setmainfont[Mapping=tex-text]{Garamond} % Font choice
 
+\usepackage{listings} % To insert formatted code
+\usepackage{color} % To color text
+
+%---------------------------------------------------------------------------------------------------------------------
+% Code Format Settings
+%---------------------------------------------------------------------------------------------------------------------
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
 %---------------------------------------------------------------------------------------------------------------------
 % Title Section
 %---------------------------------------------------------------------------------------------------------------------
@@ -69,6 +97,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur \ref{tab:tbl1}sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
+%---------------------------------------------------------------------------------------------------------------------
+% Tables
+%---------------------------------------------------------------------------------------------------------------------
+
 \subsection{Tables}
 
 % You can write the code of your table by hand but i highly recommend using a tool like http://www.tablesgenerator.com/latex_tables
@@ -84,6 +116,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \end{tabular}
 \end{table}
 
+%---------------------------------------------------------------------------------------------------------------------
+% List
+%---------------------------------------------------------------------------------------------------------------------
+
 \subsection{List}
 
 \begin{itemize}
@@ -94,6 +130,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 \item Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 \end{itemize}
+
+%---------------------------------------------------------------------------------------------------------------------
+% Math
+%---------------------------------------------------------------------------------------------------------------------
 
 \subsection{Math}
 
@@ -110,6 +150,39 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \(p_(t1)=\theta^(-\frac{\Delta}{s})\) % inline math
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+%---------------------------------------------------------------------------------------------------------------------
+% Code
+%---------------------------------------------------------------------------------------------------------------------
+
+\subsection{Code Example}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.:
+\\
+\begin{lstlisting}
+class ProjectRepository {
+    private Repository repository;
+
+    public ProjectRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    public void Add(string ProjectName) {
+        Repository.Add("Project", ProjectName);
+    }
+}
+
+class Repository {
+    public void Add(string Table, string Value) {
+        //...
+    }
+}
+
+\end{lstlisting}
+
+%---------------------------------------------------------------------------------------------------------------------
+% Conclusions
+%---------------------------------------------------------------------------------------------------------------------
 
 \section{Conclusions}
 
