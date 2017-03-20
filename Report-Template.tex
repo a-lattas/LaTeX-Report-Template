@@ -24,6 +24,9 @@
 \usepackage{listings} % To insert formatted code
 \usepackage{color} % To color text
 
+\usepackage{algpseudocode} % To insert algorithms (both needed)
+\usepackage{algorithm} % To insert algorithms (both needed)
+
 %---------------------------------------------------------------------------------------------------------------------
 % Code Format Settings
 %---------------------------------------------------------------------------------------------------------------------
@@ -154,7 +157,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 %---------------------------------------------------------------------------------------------------------------------
 % Code
 %---------------------------------------------------------------------------------------------------------------------
-
+\newpage
 \subsection{Code Example}
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.:
@@ -179,6 +182,35 @@ class Repository {
 }
 
 \end{lstlisting}
+
+%---------------------------------------------------------------------------------------------------------------------
+% Algorithm
+%---------------------------------------------------------------------------------------------------------------------
+\newpage
+\subsection{Algorithm}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.:
+
+\begin{algorithm}
+\caption{Lorem ipsum dolor sit amet}
+\begin{algorithmic}
+	\State Input: set[ ], n
+	\State Initialise sb[n+1][len(set)+1]
+	\State Assign all sb[0][ ] = True;
+	\State Assign all except first: sb[ ][0] = False;
+	\For{$i=1$ to $ n $}
+	\For{$j=1$ to $ len(set)$}
+	\State sb[i][j] = sb[i][j-1]
+	\If{(i greate or equal than set[j-1])}
+	\State sb[i][j] = sb[i][j] OR sb[i  -  set[j-1]][j-1]
+	\EndIf
+	\EndFor
+	\EndFor
+	\If{(sb[n][len(set)])}
+	\State S' found.
+	\EndIf
+\end{algorithmic}
+\end{algorithm}
 
 %---------------------------------------------------------------------------------------------------------------------
 % Conclusions
